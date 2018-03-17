@@ -23,7 +23,7 @@ For each file, the scores obtained:
 - output/a_example.out: 10
 - output/b_should_b_easy.out: 176994
 - output/c_no_hurry.out: 15818350
-- output/e_high_bonus.out: 
+- output/e_high_bonus.out: 21465945 
 
 # hashcode_d.py
 This file needs the following filesas entry:  
