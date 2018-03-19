@@ -50,9 +50,9 @@ def init_rides(ride_list, end):
                 early_rides_possible += 1          
                 
             
-    print("nb rides total : "+ str(len(ride_list)))
-    print("nb rides possible : "+ str(ride_possible))
-    print("nb rides early possible : "+ str(early_rides_possible))
+    #print("nb rides total : "+ str(len(ride_list)))
+    #print("nb rides possible : "+ str(ride_possible))
+    #print("nb rides early possible : "+ str(early_rides_possible))
     return rides
 
 
@@ -124,7 +124,7 @@ def simulate_cars(end, ride_list, car_list, cpt):
 
     for mycar in car_list:
 
-        print("finding the best rides for car number : "+str(k))
+        #print("finding the best rides for car number : "+str(k))
         k = k +1
         
         bestride, bestavail = best_ride_possible(mycar, ride_list, end, True)
@@ -248,20 +248,29 @@ def result(input_file):
     simulate_cars(step_nb, ride_list, car_list, ride_per_car)
     write_output(input_file, car_list)
    
-    
-print("first file")
-#result("a_example")
-print("The score is: "+str(score)+" for the scenario a")
-score = 0 
-print("second file")
-#result("b_should_be_easy")
-print("The score is: "+str(score)+" for the scenario b")
-score = 0 
-print("third file")
-#result("c_no_hurry")
-print("The score is: "+str(score)+" for the scenario c")
-score = 0 
-print("fifth file")
-result("e_high_bonus")
+def  run_first_scenario():
+    global score
+    print("first scenario: example")
+    result("a_example")
+    print("The score is: "+str(score)+" for the scenario a \n")
+    score_a = score
+    score = 0
+    return score_a
 
+def run_second_scenario():
+    global score
+    print("second scenario: should be easy")
+    result("b_should_be_easy")  
+    print("The score is: "+str(score)+" for the scenario b \n")
+    score_b = score
+    score = 0 
+    return score_b
 
+def run_third_scenario():
+    global score
+    print("third scenario: no hurry")
+    result("c_no_hurry")
+    print("The score is: "+str(score)+" for the scenario c \n")
+    score_c = score
+    score = 0 
+    return score_c
