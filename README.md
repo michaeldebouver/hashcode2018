@@ -26,7 +26,7 @@ For each file, the scores obtained:
 - output/e_high_bonus.out: 21465945 
 
 # hashcode_d.py
-:warning: The file is not up to date
+:warning: The file is not up to date  
 This file needs the following filesas entry:  
 - input/d_metropolis.in
 
