@@ -6,6 +6,15 @@ Two files are necessary to complete the 49.6M score. The first one is optimized 
 The second file is optimized for the fourth input file. The fourth input file differs from the others since it contains some rides that ends at the other side of the city.
 In each example, the main aobjective is to minimize the time spent with no passenger for the cars. 
 
+# Hashcode.py
+This file is the main file and calls the following files:
+- hashcode_a_b_c.py
+- hashcode_d.py
+- hashcode_e.py
+
+and return the total score obtained.
+
+
 # hashcode_a_b_c.py
 This file needs the following files as entries:  
 - input/a_example.in
