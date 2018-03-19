@@ -6,7 +6,7 @@ Two files are necessary to complete the 49.6M score. The first one is optimized 
 The second file is optimized for the fourth input file. The fourth input file differs from the others since it contains some rides that ends at the other side of the city.
 In each example, the main aobjective is to minimize the time spent with no passenger for the cars. 
 
-# hashcode_a_b_c_e.py
+# hashcode_a_b_c.py
 This file needs the following files as entries:  
 - input/a_example.in
 - input/b_should_b_easy.in
@@ -26,6 +26,7 @@ For each file, the scores obtained:
 - output/e_high_bonus.out: 21465945 
 
 # hashcode_d.py
+:warning: The file is not up to date
 This file needs the following filesas entry:  
 - input/d_metropolis.in
 
@@ -34,3 +35,13 @@ This file generates the following file:
 
 For the generated file, the score obtained:
 - output/d_metropolis.out: 12139521 
+
+# hashcode_e.py
+This file needs the following file as entry:  
+- input/e_high_bonus.in
+
+This file generates the following file:
+- output/e_high_bonus.out
+
+For this file, the scores obtained:
+- output/e_high_bonus.out: 21465945 
