@@ -47,7 +47,6 @@ def init_cars(car_nb, end):
     cars = []
     for i in range(car_nb):
         cars.append(car(end))
-    print("nb cars total : "+ str(len(cars)))
     return cars
 
 def init_rides(ride_list):
@@ -72,11 +71,11 @@ def init_rides(ride_list):
     av = round(sum_dist / len(ride_list))  
     av_pos_x = round(av_pos_x / len(ride_list))
     av_pos_y = round(av_pos_y / len(ride_list))       
-    print("nb rides total : "+ str(len(ride_list)))
-    print("nb rides possible : "+ str(ride_possible))
-    print("nb rides early possible : "+ str(early_rides_possible))
-    print("average of distance for each ride : "+str(av))
-    print("average position of start : "+str(av_pos_x)+","+str(av_pos_y))
+    #print("nb rides total : "+ str(len(ride_list)))
+    #print("nb rides possible : "+ str(ride_possible))
+    #print("nb rides early possible : "+ str(early_rides_possible))
+    #print("average of distance for each ride : "+str(av))
+    #print("average position of start : "+str(av_pos_x)+","+str(av_pos_y))
     return rides, av, [av_pos_x, av_pos_y]
 
 
@@ -114,10 +113,12 @@ def best_ride_possible(mycar, ridelist, end, is_earliest, av, av_pos):
             
             
             #score = time_at_arrival + log(1+time_to_arrive_start)
-            if avail_time.start <= 0.85 * end:
-                score = better_start + ride_duration * 0.01
+            distance_from_average = distance(myride.end_position, av_pos)
+            
+            if avail_time.start <= 0.80 * end:
+                score = better_start + ( distance_from_average + ride_duration ) * 0.01
             else:
-                score = better_start + ride_duration * 0.05 
+                score = better_start + (ride_duration) * 0.03
             
             if score < mintime:
                 mintime = score
@@ -136,28 +137,18 @@ def distance(start, end):
 
 
 def simulate_cars(end, ride_list, car_list, cpt, av, av_pos):
-    length = len(car_list)
-     
+        
+    car_temp = []   
+    while len(car_list) > 0:
+        print("number of remaining cars: "+str(len(car_list)))
+        print("number of remaining rides: "+str(len(ride_list)))
+        
             
-    bestrides = [True] * len(car_list) 
-    bestexists = True
-        
-        
-    while bestexists:
         for mycar in car_list:
             bestride, bestavail = best_ride_possible(mycar, ride_list, end, False, av, av_pos)
             if(bestride == None):
-                bestrides[car_list.index(mycar)] = False
-                still = True
-                for exists in bestrides:
-                    if exists:
-                        still= True
-                        break
-                    else:
-                        still = False
-                if not still:
-                    bestexists = False
-                    break
+                car_list.remove(mycar)
+                car_temp.append(mycar)
             else:   
                 mycar.courses.append(bestride)
                 ride_temp = []
@@ -179,20 +170,17 @@ def simulate_cars(end, ride_list, car_list, cpt, av, av_pos):
                         min_time_at_start = start_time + time_to_go
                         margin_at_start = bestride.earliest_departure - min_time_at_start
                         if(margin_at_start > 5):
-                            time_of_start = start_time + margin_at_start
-                            bestride.time_of_actual_start = time_of_start
-                            avail_temp.append(availability(car_pos, start_time, time_of_start))
+                            avail_temp.append(availability(car_pos,start_time, start_time + margin_at_start))
+
     
                         time_of_arrival = max(min_time_at_start, bestride.earliest_departure) + distance(bestride.start_position, bestride.end_position)
                         if(end_time - time_of_arrival > 5):
-                            bestride.time_of_actual_arrival = time_of_arrival
                             avail_temp.append(availability(bestride.end_position, time_of_arrival, end_time))
                             
                         mycar.available_times = avail_temp
+                        
                                 
-        #check_courses(mycar, end)
-        print("Il reste "+str(len(ride_list))+" trajets non pourvus")
-    return ride_list
+    return ride_list, car_temp
         
     
 def nice_print(tab):    
@@ -245,19 +233,11 @@ def result(input_file):
     sorted_ride_tab = sorted(ride_tab, key = itemgetter(3))
     car_list = init_cars(car_nb, step_nb)
     ride_list, av, av_pos = init_rides(sorted_ride_tab)
-    print("nb steps" + str(step_nb))
-    ride_list = simulate_cars(step_nb, ride_list, car_list, ride_per_car, av, av_pos)
+    ride_list, car_list = simulate_cars(step_nb, ride_list, car_list, ride_per_car, av, av_pos)
     write_output(input_file, car_list)
     
-#print("first file")
-#result("a_example")
-#print("second file")
-#result("b_should_be_easy")
-#print("third file")
-#result("c_no_hurry")
-#print("fourth file")
-result("d_metropolis")
-#print("fifth file")
-#result("e_high_bonus")
-
-
+def run_fourth_scenario():
+    print("fourth scenario: metropolis")
+    result("d_metropolis")
+    print("The score is: "+str(score)+" for the scenario d")
+    return score
